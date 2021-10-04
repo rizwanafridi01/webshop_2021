@@ -70,7 +70,23 @@ class LoginController extends Controller
         if (auth()->user()->is_admin) {
             return route('admin.home');
         }
-
         return route('user.home');
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/login');
     }
 }

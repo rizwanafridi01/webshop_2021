@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\WebRepositories\BankRepository;
+use App\WebRepositories\CategoryRepository;
 use App\WebRepositories\CityRepository;
 use App\WebRepositories\CompanyRepository;
 use App\WebRepositories\CountryRepository;
 use App\WebRepositories\Interfaces\IBankRepositoryInterface;
+use App\WebRepositories\Interfaces\ICategoryRepositoryInterface;
 use App\WebRepositories\Interfaces\ICityRepositoryInterface;
 use App\WebRepositories\Interfaces\ICompanyRepositoryInterface;
 use App\WebRepositories\Interfaces\ICountryRepositoryInterface;
@@ -38,6 +40,7 @@ class WebServiceProvider extends ServiceProvider
         $this->app->bind(IBankRepositoryInterface::class, BankRepository::class);
         $this->app->bind(IProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(IUnitRepositoryInterface::class, UnitRepository::class);
+        $this->app->bind(ICategoryRepositoryInterface::class, CategoryRepository::class);
     }
 
     /**

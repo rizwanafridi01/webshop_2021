@@ -60,6 +60,10 @@
                 <li> <a href="{{ route('admin.companies.index') }}" class="nav-link {{ request()->is('admin/companies') || request()->is('admin/companies/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Companies</a>
                 </li>
             @endcan
+            @can('category_access')
+                    <li> <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->is('admin/categories') || request()->is('admin/categories/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Categories</a>
+                    </li>
+            @endcan
             @can('country_access')
             <li> <a href="{{ route('admin.countries.index') }}" class="nav-link {{ request()->is('admin/countries') || request()->is('admin/countries/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i> Manage Countries</a>
             </li>

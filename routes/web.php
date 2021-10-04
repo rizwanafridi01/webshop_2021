@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Route;
 //
 //Auth::routes();
 
-Route::redirect('/', '/login');
+////////Social Pages ///////////
+Route::get('/', 'WebHomeController@index')->name('web');
+//////// end of social pages ////////
+
+
+Route::redirect('/login', '/login');
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -48,6 +53,10 @@ Route::group([
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
+
+    // Roles
+    Route::delete('categories/destroy', 'CategoryController@massDestroy')->name('categories.massDestroy');
+    Route::resource('categories', 'CategoryController');
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');

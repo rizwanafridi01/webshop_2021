@@ -128,7 +128,7 @@ class BankRepository implements IBankRepositoryInterface
     {
         // TODO: Implement show() method.
         $bank = Bank::find($id);
-        return view('Admin.banks.show',compact('bank'));
+        return view('admin.banks.show',compact('bank'));
     }
 
     public function edit($id)
