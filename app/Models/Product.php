@@ -37,8 +37,23 @@ class Product extends Model
             return $this->belongsTo('App\Models\Company','company_id','id');
         }
 
+        public function sub_category()
+        {
+            return $this->belongsTo('App\Models\SubCategory','sub_category_id','id');
+        }
+
         public function unites()
         {
             return $this->hasMany('App\Models\Unit');
+        }
+
+        public function product_galleries()
+        {
+             return $this->hasMany('App\Models\ProductGallery');
+        }
+
+        public function product_classifications()
+        {
+            return $this->hasMany('App\Models\ProductClassification');
         }
 }

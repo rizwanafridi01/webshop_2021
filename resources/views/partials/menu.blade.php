@@ -60,10 +60,7 @@
                 <li> <a href="{{ route('admin.companies.index') }}" class="nav-link {{ request()->is('admin/companies') || request()->is('admin/companies/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Companies</a>
                 </li>
             @endcan
-            @can('category_access')
-                    <li> <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->is('admin/categories') || request()->is('admin/categories/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Categories</a>
-                    </li>
-            @endcan
+
             @can('country_access')
             <li> <a href="{{ route('admin.countries.index') }}" class="nav-link {{ request()->is('admin/countries') || request()->is('admin/countries/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i> Manage Countries</a>
             </li>
@@ -84,16 +81,60 @@
                     <li> <a href="{{ route('admin.banks.index') }}" class="nav-link {{ request()->is('admin/banks') || request()->is('admin/banks/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Banks</a>
                     </li>
             @endcan
-            @can('product_access')
-                    <li> <a href="{{ route('admin.products.index') }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Products</a>
-                    </li>
-            @endcan
+
             @can('unit_access')
                     <li> <a href="{{ route('admin.units.index') }}" class="nav-link {{ request()->is('admin/units') || request()->is('admin/units/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Units</a>
                     </li>
             @endcan
         </ul>
     </li>
+
+        </li>
+        <li class="menu-label">Products Information</li>
+
+        @can('category_access')
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class='bx bxs-category'></i>
+                    </div>
+                    <div class="menu-title">Categories</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->is('admin/categories') || request()->is('admin/categories/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Categories</a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+
+        @can('sub_category_access')
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class='bx bxs-shapes'></i>
+                    </div>
+                    <div class="menu-title">Sub Categories</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('admin.sub_categories.index') }}" class="nav-link {{ request()->is('admin/sub_categories') || request()->is('admin/sub_categories/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Sub Categories</a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+
+        @can('product_access')
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon"><i class='bx bxs-shopping-bag'></i>
+                    </div>
+                    <div class="menu-title">Products</div>
+                </a>
+                <ul>
+                    <li> <a href="{{ route('admin.products.index') }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}"><i class="bx bx-right-arrow-alt"></i>Manage Products</a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+
+
     <li class="menu-label">Contacts</li>
         <li>
             <a class="has-arrow" href="javascript:;">

@@ -94,33 +94,41 @@
     <div class="section-padding-1">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="product-wrap mb-55">
-                        <div class="product-img pro-theme-color-border product-border mb-25">
-                            <a href="product-details.html">
-                                <img src="{{ asset('web_assets/images/product/p1.jpg') }}" alt="">
-                            </a>
-                            <span class="badge-green badge-right-20 badge-top-20 badge-ptb-1">NEW</span>
-                            <div class="product-action product-action-position-1 pro-action-theme-color">
-                                <a title="Add to Cart" href="#"><i class="fa fa-cart-arrow-down"></i></a>
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="fa fa-search-plus"></i></a>
-                                <a title="Add to Wishlist" href="#"><i class="fa fa-heart-o"></i></a>
-                                <a title="Add to Compare" href="#"><i class="fa fa-compress"></i></a>
+                @foreach($products as $product)
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <div class="product-wrap mb-55">
+                            <div class="product-img pro-theme-color-border product-border mb-25">
+                                <a href="#">
+                                    <img style="height: 400px" src="{{ asset('files/'.$product->thumbnail) }}" alt="">
+                                </a>
+                                <span class="badge-green badge-right-20 badge-top-20 badge-ptb-1">NEW</span>
+                                <div class="product-action product-action-position-1 pro-action-theme-color">
+                                    <a title="Add to Cart" href="{{ route('add.to.cart', $product->id) }}"><i class="fa fa-cart-arrow-down"></i></a>
+                                    <a data-bs-toggle="modal" class="product_info" data-bs-target="#exampleModal" href="#"><i class="fa fa-search-plus"></i></a>
+                                    <a title="Add to Wishlist" href="#"><i class="fa fa-heart-o"></i></a>
+                                    <a title="Add to Compare" href="#"><i class="fa fa-compress"></i></a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-content">
-                            <h4><a href="product-details.html">Adapt Active Noise Cancelling Headphones</a></h4>
-                            <div class="product-price">
-                                <span class="new-price">Rs 59.00</span>
+                            <div class="product-content">
+                                <h4><a href="#">{!! $product->excerpt !!}</a></h4>
+                                <div class="product-price">
+                                    <span class="new-price">AED {{ $product->currentAmount }}</span>
+                                    @if($product->discount != 0)
+                                        &nbsp; &nbsp; &nbsp;<span class="old-price">AED {{ $product->amount }}</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
+
+
+
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="product-wrap mb-55">
                         <div class="product-img pro-theme-color-border product-border mb-25">
                             <a href="product-details.html">
-                                <img src="{{ asset('web_assets/images/product/p4.jpg') }}" alt="">
+                                <img  src="{{ asset('web_assets/images/product/p5.jpg') }}" alt="">
                             </a>
                             <div class="product-action product-action-position-1 pro-action-theme-color">
                                 <a title="Add to Cart" href="#"><i class="fa fa-cart-arrow-down"></i></a>
@@ -521,17 +529,17 @@
             <div class="modal-body">
                 <div class="row g-0">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="quickview-slider-active owl-carousel">
-                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-1.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-1.jpg') }}" alt=""></a>
-                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-2.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-2.jpg') }}" alt=""></a>
+                        <div class="quickview-slider-active owl-carousel" id="product_galleries1">
+{{--                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-1.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-1.jpg') }}" alt=""></a>--}}
+{{--                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-2.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-2.jpg') }}" alt=""></a>--}}
                         </div>
                         <!-- Thumbnail Large Image End -->
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                         <div class="product-details-content quickview-content-padding">
-                            <h2 class="uppercase">JAW SHARK WOMEN T-SHIRT</h2>
-                            <h3>$19.99</h3>
-                            <div class="product-details-peragraph">
+                            <h2 class="uppercase" id="productName">JAW SHARK WOMEN T-SHIRT</h2>
+                            <h3 id="productPrice">$19.99</h3>
+                            <div class="product-details-peragraph" id="productExcerpt">
                                 <p>Sed ligula sapien, fermentum id est eget, viverra auctor sem. Vivamus maximus enim vitae urna porta, ut euismod nibh lacinia. Pellentesque at diam sed libero tincidunt feugiat.</p>
                             </div>
                             <div class="product-details-action-wrap">
@@ -551,10 +559,9 @@
                                 </div>
                             </div>
                             <div class="product-details-meta">
-                                <span>SKU: N/A</span>
-                                <span>Categories: <a href="#">Woman</a>, <a href="#">Dress</a>, <a href="#">Style</a>, <a href="#">T-Shirt</a>, <a href="#">Mango</a></span>
-                                <span>Tag: <a href="#">Fashion</a>, <a href="#">Dress</a> </span>
-                                <span>Product ID: <a href="#">274</a></span>
+                                <div id="product_classifications" class="row">
+
+                                </div>
                             </div>
                             <div class="product-details-info">
                                 <a href="#"><i class=" ti-location-pin "></i>Check Store availability</a>
@@ -578,7 +585,68 @@
     </div>
 </div>
 <!-- Modal end -->
+<script>
+    $(document).ready(function (){
+        $('.product_info').click(function (){
+            var Id = 60;
+            // Id = $(this).val();
+            alert(Id)
+            if(Id>0){
+                $.ajax({
+                    url: "{{ URL('productDetails') }}/" + Id,
+                    type: "get",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result !== "Failed") {
+                            console.log(result);
+                            //console.log(result.customer_prices[0].Rate);
+                             $('#productName').text(result.name);
+                             $('#productPrice').text(result.currentAmount);
+                             $('#productExcerpt').text(result.excerpt);
+                            $("#product_classifications").html('');
+                            var product_classifications = '';
+                            if (result.product_classifications.length > 0)
+                            {
+                                for (var i = 0; i < result.product_classifications.length; i++) {
+                                    // vehicleDetails += '<option value="' + result.customer_vehicles[i].registrationNumber + '">' + result.customer_vehicles[i].registrationNumber + '</option>';
+                                    // product_classifications += '<th value="' + result.product_classifications[i].id + '">'+ result.product_classifications[i].name +'</th>';
+                                    product_classifications += '<div class="col-6"><span>' + result.product_classifications[i].name + ': ' + result.product_classifications[i].description + '</span></div>'
+                                }
+                            }
+                            else {
+                                product_classifications += '<span colspan="2" value="0">No Data</span>';
+                            }
 
+
+                            $('#product_galleries').html('');
+                            var product_galleries = '';
+                            if (result.product_galleries.length > 0)
+                            {
+                                for (var j = 0; j < result.product_galleries.length; j++) {
+                                    // vehicleDetails += '<option value="' + result.customer_vehicles[i].registrationNumber + '">' + result.customer_vehicles[i].registrationNumber + '</option>';
+                                    // product_classifications += '<th value="' + result.product_classifications[i].id + '">'+ result.product_classifications[i].name +'</th>';
+                                    {{--product_galleries += '<a class="img-popup" href="{{ asset('web_assets/images/product/quickview-1.jpg') }}"><img src="{{ asset('files/'+ result.product_galleries[j].galleryImages +') }}" alt=""></a>'--}}
+                                    {{--    product_galleries += '<a class="img-popup" href="{{ asset('web_assets/images/product/quickview-1.jpg') }}"><img src="{{ asset('files') }}/'+ result.product_galleries[j].galleryImages +'" alt=""></a>';--}}
+                                        product_galleries += '<a class="img-popup" target="_blank" href="{{ asset('files') }}/'+ result.product_galleries[j].galleryImages +'"><img src="{{ asset('files') }}/'+ result.product_galleries[j].galleryImages +'" alt=""></a>'
+                                }
+                            }
+                            else {
+                                product_galleries += '<span colspan="2" value="0">No Data</span>';
+                            }
+                            $("#product_galleries").append(product_galleries);
+                            $("#product_classifications").append(product_classifications);
+                        } else {
+                            alert(result);
+                        }
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage);
+                    }
+                });
+            }
+        });
+    });
+</script>
 
 @endsection
 

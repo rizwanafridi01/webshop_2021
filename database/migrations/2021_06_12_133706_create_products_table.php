@@ -16,11 +16,20 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('description')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->decimal('discount',10,2)->default('0');
+            $table->decimal('amount',10,2)->default('0');
+            $table->decimal('currentAmount',10,2)->default('0');
             $table->text('updateDescription')->nullable();
+            $table->unsignedBigInteger('sub_category_id')->default(0);
+            $table->unsignedBigInteger('Product_percentage_id')->default(0);
             $table->unsignedBigInteger('user_id')->default(0);
             $table->unsignedBigInteger('company_id')->default(0);
             $table->timestamp('createdDate')->useCurrent();
+            $table->text('excerpt')->nullable();
+            $table->text('description')->nullable();
+            $table->text('uses')->nullable();
+            $table->text('shippingInstruction')->nullable();
             $table->boolean('isActive')->default(true);
             $table->softDeletes();
             $table->timestamps();

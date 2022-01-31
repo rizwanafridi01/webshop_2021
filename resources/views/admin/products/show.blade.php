@@ -56,12 +56,104 @@
 
                             <tr>
                                 <th>
+                                    Product Thumbnail
+                                </th>
+                                <td>
+                                    <img width="50" src="{{ asset('files/'. $product->thumbnail ) }}" alt="">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Product Gallery
+                                </th>
+                                <td>
+                                    @if(!empty($product->product_galleries))
+                                        @foreach($product->product_galleries as $gallery)
+                                        <img width="50" style="border: dashed 1px #0a53be " src="{{ asset('files/'. $gallery->galleryImages ) }}" alt="">
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Price
+                                </th>
+                                <td>
+                                    {{ $product->amount }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Discount
+                                </th>
+                                <td>
+                                    {{ $product->discount }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    Current Price
+                                </th>
+                                <td>
+                                    {{ $product->currentAmount }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="2" style="background: #0a53be; color: whitesmoke">
+                                    Classifications
+                                </th>
+                                <td>
+                                    @if(!empty($product->product_classifications))
+                                        @foreach($product->product_classifications as $classification)
+                                            <tr style="background: #8a8a8a; color: white">
+                                                <th>{{ $classification->name }}</th>
+                                                <td>{{ $classification->description }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                     Product Excerpt
+                                </th>
+                                <td>
+                                     {!! $product->excerpt ?? "No Ecxerpt" !!}
+                                </td>
+                            </tr>
+                            <tr>
+                                  <th>
+                                      Shipping address
+                                  </th>
+                                  <td>
+                                     {!! $product->shippingInstruction ?? "No Shipping Address" !!}
+                                  </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     Product Description
                                 </th>
                                 <td>
-                                    {{ $product->description ?? "No Description" }}
+                                    {!! $product->description ?? "No Description" !!}
                                 </td>
                             </tr>
+
+                            <tr>
+                                 <th>
+                                                    Product Uses
+                                 </th>
+                                 <td>
+                                     {!! $product->uses ?? "No Uses" !!}
+                                 </td>
+                            </tr>
+
+
 
                             </tbody>
                         </table>

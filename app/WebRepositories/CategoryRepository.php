@@ -148,4 +148,11 @@ class CategoryRepository implements ICategoryRepositoryInterface
     {
         // TODO: Implement trashed() method.
     }
+
+    public function categoryDetails($id)
+    {
+        // TODO: Implement categoryDetails() method.
+        $categories = Category::with('sub_categories')->find($id);
+        return response()->json($categories);
+    }
 }

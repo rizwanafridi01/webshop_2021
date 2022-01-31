@@ -31,6 +31,10 @@
     <link rel="stylesheet" href="{{ asset('web_assets/css/plugins/jquery-ui.css') }}">
     <link rel="stylesheet" href="{{ asset('web_assets/css/plugins/easyzoom.css') }}">
     <link rel="stylesheet" href="{{ asset('web_assets/css/custom.css') }}">
+    <!-- Modernizer JS -->
+    <script src="{{ asset('web_assets/js/vendor/modernizr-3.11.7.min.js') }}"></script>
+    <!-- jquery -->
+    <script src="{{ asset('web_assets/js/vendor/jquery-v3.6.0.min.js') }}"></script>
 
 </head>
 
@@ -113,7 +117,7 @@
                                         <a href="#"><i class="fa fa-heart-o"></i></a>
                                     </div>
                                     <div class="same-style same-style-mrg-dec">
-                                        <a class="cart-active" href="#"><i class="fa fa-cart-arrow-down"></i></a>
+                                        <a class="cart-active" href="#"><i class="fa fa-cart-arrow-down"></i><span style="font-size: 8px">{{ count((array) session('cart')) }}</span></a>
                                     </div>
                                     <div class="same-style same-style-mrg-dec">
                                         <a class="clickalbe-button-active" href="#"><i class="fa fa-bars"></i></a>
@@ -404,34 +408,36 @@
             <a class="cart-close" href="#"><i class=" ti-close "></i></a>
             <div class="cart-content">
                 <h3>Shopping Cart</h3>
+                @php $total = 0 @endphp
+                @foreach((array) session('cart') as $id => $details)
+{{--                    {{ $total += $details['price'] * $details['quantity'] }}--}}
+                    @php $total += $details['price'] * $details['quantity'] @endphp
+                @endforeach
+
                 <ul>
-                    <li class="single-product-cart">
-                        <div class="cart-img">
-                            <a href="#"><img src="{{ asset('web_assets/images/cart/cart-1.jpg') }}" alt=""></a>
-                        </div>
-                        <div class="cart-title">
-                            <h4><a href="#">Awesome Mobile</a></h4>
-                            <span> 1 × Rs 49.00	</span>
-                        </div>
-                        <div class="cart-delete">
-                            <a href="#">×</a>
-                        </div>
-                    </li>
-                    <li class="single-product-cart">
-                        <div class="cart-img">
-                            <a href="#"><img src="{{ asset('web_assets/images/cart/cart-2.jpg') }}" alt=""></a>
-                        </div>
-                        <div class="cart-title">
-                            <h4><a href="#">Nice Headphones</a></h4>
-                            <span> 1 × Rs49.00	</span>
-                        </div>
-                        <div class="cart-delete">
-                            <a href="#">×</a>
-                        </div>
-                    </li>
+
+
+                    @if(session('cart'))
+                        @foreach(session('cart') as $id => $details)
+                            <li class="single-product-cart">
+                                <div class="cart-img">
+                                    <a href="#"><img src="{{ asset('files/'.$details['image']) }}" alt=""></a>
+                                </div>
+                                <div class="cart-title">
+                                    <h4><a href="#">{{ $details['name'] }}</a></h4>
+                                    <span> {{ $details['quantity'] }} × {{ $details['price'] }}	</span>
+                                </div>
+                                <div class="cart-delete">
+                                    <a href="#">×</a>
+                                </div>
+                            </li>
+
+                        @endforeach
+                    @endif
+
                 </ul>
                 <div class="cart-total">
-                    <h4>Subtotal: <span>Rs 170.00</span></h4>
+                    <h4>Subtotal: <span>{{ $total }} AED</span></h4>
                 </div>
                 <div class="cart-checkout-btn">
                     <a class="btn-hover cart-btn-style" href="cart.html">view cart</a>
@@ -692,10 +698,7 @@
 <!-- All JS is here
 ============================================ -->
 
-<!-- Modernizer JS -->
-<script src="{{ asset('web_assets/js/vendor/modernizr-3.11.7.min.js') }}"></script>
-<!-- jquery -->
-<script src="{{ asset('web_assets/js/vendor/jquery-v3.6.0.min.js') }}"></script>
+
 <!-- Popper JS -->
 <script src="{{ asset('web_assets/js/vendor/popper.js') }}"></script>
 <!-- Bootstrap JS -->

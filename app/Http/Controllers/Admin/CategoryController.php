@@ -50,4 +50,10 @@ class CategoryController extends Controller
     {
         return $this->categoryRepository->destroy_temp($request, $id);
     }
+
+    public function categoryDetails($id)
+    {
+        return $this->categoryRepository->categoryDetails($id);
+    }
+
 }

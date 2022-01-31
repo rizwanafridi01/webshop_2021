@@ -66,4 +66,19 @@ class Company extends Model
         {
             return $this->hasMany('App\Models\Unit');
         }
+
+        public function sub_categories()
+        {
+            return $this->hasMany('App\Models\SubCategory');
+        }
+
+        public function product_galleries()
+        {
+            return $this->hasMany('App\Models\ProductGallery');
+        }
+
+        public function product_classifications()
+        {
+            return $this->hasMany('App\Models\ProductClassification');
+        }
 }

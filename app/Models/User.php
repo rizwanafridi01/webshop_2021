@@ -97,6 +97,20 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Unit');
     }
 
+    public function sub_categories()
+    {
+        return $this->hasMany('App\Models\SubCategory');
+    }
+
+    public function product_galleries()
+    {
+        return $this->hasMany('App\Models\ProductGallery');
+    }
+
+    public function product_classifications(){
+        return $this->hasMany('App\Models\ProductClassification');
+    }
+
     public function getIsAdminAttribute()
     {
         //return $rl =  Role::where('id', 1)->exists();

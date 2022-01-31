@@ -4,7 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--favicon-->
+
     <link rel="icon" href="{{ asset('assets/images/logo-icon-1.png') }}" type="image/png" />
     <!--plugins-->
     <link href="{{ asset('assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
@@ -25,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/header-colors.css') }}" />
 
     <link href="{{ asset('assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 
     <!--plugins-->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -225,6 +228,7 @@
 <!--app JS-->
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
 </body>
 
 </html>

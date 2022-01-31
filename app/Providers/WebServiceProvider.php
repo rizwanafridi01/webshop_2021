@@ -12,13 +12,17 @@ use App\WebRepositories\Interfaces\ICategoryRepositoryInterface;
 use App\WebRepositories\Interfaces\ICityRepositoryInterface;
 use App\WebRepositories\Interfaces\ICompanyRepositoryInterface;
 use App\WebRepositories\Interfaces\ICountryRepositoryInterface;
+use App\WebRepositories\Interfaces\IProductGalleryRepositoryInterface;
 use App\WebRepositories\Interfaces\IProductRepositoryInterface;
 use App\WebRepositories\Interfaces\IRegionRepositoryInterface;
 use App\WebRepositories\Interfaces\IStateRepositoryInterface;
+use App\WebRepositories\Interfaces\ISubCategoryRepositoryInterface;
 use App\WebRepositories\Interfaces\IUnitRepositoryInterface;
+use App\WebRepositories\Interfaces\ProductGalleryRepository;
 use App\WebRepositories\ProductRepository;
 use App\WebRepositories\RegionRepository;
 use App\WebRepositories\StateRepository;
+use App\WebRepositories\SubCategoryRepository;
 use App\WebRepositories\UnitRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -41,6 +45,8 @@ class WebServiceProvider extends ServiceProvider
         $this->app->bind(IProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(IUnitRepositoryInterface::class, UnitRepository::class);
         $this->app->bind(ICategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(ISubCategoryRepositoryInterface::class, SubCategoryRepository::class);
+        $this->app->bind(IProductGalleryRepositoryInterface::class, ProductGalleryRepository::class);
     }
 
     /**

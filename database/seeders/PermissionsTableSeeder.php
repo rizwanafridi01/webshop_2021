@@ -285,6 +285,26 @@ class PermissionsTableSeeder extends Seeder
                 'id' => '67',
                 'name' => 'category_access'
             ],
+            [
+                'id' => '68',
+                'name' => 'sub_category_access'
+            ],
+            [
+                'id' => '69',
+                'name' => 'sub_category_delete'
+            ],
+            [
+                'id' => '70',
+                'name' => 'sub_category_edit'
+            ],
+            [
+                'id' => '71',
+                'name' => 'sub_category_create'
+            ],
+            [
+                'id' => '72',
+                'name' => 'sub_category_show'
+            ],
         ];
 
         Permission::insert($permissions);

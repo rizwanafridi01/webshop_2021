@@ -24,7 +24,7 @@
                 @endcan
             </div>
             <!--end breadcrumb-->
-            <h6 class="mb-0 text-uppercase">City</h6>
+            <h6 class="mb-0 text-uppercase">Product</h6>
             <hr/>
             <div class="card">
                 <div class="card-body">
@@ -36,6 +36,7 @@
                                 <th>
                                     Product Name
                                 </th>
+
                                 <th width="5px">
                                     Active
                                 </th>

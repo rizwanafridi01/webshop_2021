@@ -35,4 +35,16 @@ class Category extends Model
     {
         return $this->belongsTo('App\Models\Company','company_id','id');
     }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product','product_id','id');
+    }
+
+    public function sub_categories()
+    {
+        return $this->hasMany('App\Models\SubCategory');
+    }
+
+
 }

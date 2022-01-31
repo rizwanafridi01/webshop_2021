@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-xl-12 mx-auto">
 
-                <h6 class="mb-0 text-uppercase">Bank</h6>
+                <h6 class="mb-0 text-uppercase">Category</h6>
                 <hr/>
                 <div class="card">
                     <div class="card-body">
@@ -38,7 +38,7 @@
                             <tbody>
                             <tr>
                                 <th>
-                                    Bank Id
+                                    Category Id
                                 </th>
                                 <td>
                                     {{ $category->id }}

@@ -5,7 +5,11 @@ namespace App\WebRepositories;
 
 
 use App\Http\Requests\Product\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductClassification;
+use App\Models\ProductGallery;
+use App\Models\SubCategory;
 use App\WebRepositories\Interfaces\IProductRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -72,27 +76,88 @@ class ProductRepository implements IProductRepositoryInterface
     {
         // TODO: Implement create() method.
         abort_if(Gate::denies('product_create'), Response::HTTP_FORBIDDEN,'403 Forbidden');
-        return view('admin.products.create');
+        $categories = Category::where('isActive','1')->get();
+        return view('admin.products.create', compact('categories'));
     }
 
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
-        // TODO: Implement store() method.
+//        dd($request);
+//        return response()->json(['success'=>$request->all()]);
+//        // TODO: Implement store() method.
+//dd(request());
+        request()->validate([
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+            'galleryImages.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+        ]);
         $user_id = session('user_id');
         $company_id = session('company_id');
-        $product = [
-            'name' =>$request->name,
-            'description' =>$request->description ?? 0,
-            'user_id' =>$user_id ?? 0,
-            'company_id' =>$company_id ?? 0,
-        ];
-        Product::create($product);
-        return redirect()->route('admin.products.index');
+        if ($request->hasFile('thumbnail')){
+
+            $thumbnail = $request->file('thumbnail');
+            $fileName = time().'_'.rand(1,99999999).'_'.$thumbnail->getClientOriginalName();
+            // File extension
+            $extension = $thumbnail->getClientOriginalExtension();
+            //file location
+            $location = 'files';
+            // Upload file
+            $thumbnail->move($location,$fileName);
+            // File path
+            $filepath = url('files/'.$fileName);
+
+            $product = new Product();
+            $product->name = $request->name;
+            $product->thumbnail = $fileName;
+            $product->sub_category_id = $request->subCategory_id;
+            $product->amount = $request->amount;
+            $product->discount = $request->discount;
+            $product->currentAmount = $request->amount - $request->discount;
+            $product->excerpt = $request->excerpt;
+            $product->uses = $request->uses;
+            $product->shippingInstruction = $request->shippingInstruction;
+            $product->description = $request->description;
+            $product->user_id = $user_id;
+            $product->company_id = $company_id;
+            $product->save();
+
+            $classificationName = $request->classificationName;
+            $classificationDesc = $request->classificationDesc;
+            foreach($classificationName as $key => $no)
+            {
+//                dd($classificationDesc[$key]);
+                $input['name'] = $no;
+                $input['description'] = $classificationDesc[$key];
+                $input['product_id'] = $product->id;
+                $input['user_id'] = $user_id;
+                $input['company_id'] = $company_id;
+                ProductClassification::create($input);
+            }
+
+            if ($files = $request->file('galleryImages')) {
+                // Define upload path
+                $destinationPath = public_path('/files/'); // upload path
+                foreach($files as $img) {
+                    // Upload Orginal Image
+                    $profileImage =time().'_'.rand(1,9999999).'_'.$img->getClientOriginalName();
+                    $img->move($destinationPath, $profileImage);
+                    // Save In Database
+                    $imagemodel= new ProductGallery();
+                    $imagemodel->galleryImages= $profileImage;
+                    $imagemodel->product_id= $product->id;
+                    $imagemodel->user_id = $user_id;
+                    $imagemodel->company_id = $company_id;
+                    $imagemodel->save();
+                }
+            }
+
+        }
+        return back()->with('success', 'Product has been submitted Upload successfully');
     }
 
     public function update(Request $request, $id)
     {
         // TODO: Implement update() method.
+//        dd($request);
         $product = Product::find($id);
         $user_id = session('user_id');
         if ($request->activeRequest == "checkActive") {
@@ -101,12 +166,87 @@ class ProductRepository implements IProductRepositoryInterface
                 'user_id' => $user_id ?? 0,
             ]);
         }
-        else{
-            $product->update([
-                'name' => $request->name,
-                'description' =>$request->description ?? 0,
-                'user_id' => $user_id ?? 0,
-            ]);
+        else {
+//            request()->validate([
+//                'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+//                'galleryImages.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:4048',
+//            ]);
+            $user_id = session('user_id');
+            $company_id = session('company_id');
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $fileName = time() . '_' . rand(1, 99999999) . '_' . $thumbnail->getClientOriginalName();
+                // File extension
+                $extension = $thumbnail->getClientOriginalExtension();
+                //file location
+                $location = 'files';
+                // Upload file
+                $thumbnail->move($location, $fileName);
+                // File path
+                $filepath = url('files/' . $fileName);
+            } else {
+                $fileName = $request->previousName;
+//                dd($fileName);
+            }
+            $product->name = $request->name;
+            $product->thumbnail = $fileName;
+            $product->sub_category_id = $request->subCategory_id;
+            $product->amount = $request->amount;
+            $product->discount = $request->discount;
+            $product->currentAmount = $request->amount - $request->discount;
+            $product->excerpt = $request->excerpt;
+            $product->uses = $request->uses;
+            $product->shippingInstruction = $request->shippingInstruction;
+            $product->description = $request->description;
+            $product->user_id = $user_id;
+//                $product->company_id = $company_id;
+            $product->save();
+
+            ProductClassification::where('product_id', array($id))->delete();
+            $classificationName = $request->classificationName;
+            $classificationDesc = $request->classificationDesc;
+            if ($classificationName != null) {
+                foreach ($classificationName as $key => $no) {
+//                dd($classificationDesc[$key]);
+                    $input['name'] = $no;
+                    $input['description'] = $classificationDesc[$key];
+                    $input['product_id'] = $product->id;
+                    $input['user_id'] = $user_id;
+                    ProductClassification::create($input);
+                }
+            }
+
+            ProductGallery::where('product_id', array($id))->delete();
+
+            $previousImageName = $request->previousImageName;
+            if ($previousImageName != null)
+            {
+                foreach($previousImageName as $key1 => $no1)
+                {
+                    $imagemodel= new ProductGallery();
+                    $imagemodel->galleryImages = $no1;
+                    $imagemodel->product_id = $product->id;
+                    $imagemodel->save();
+                }
+            }
+
+            if ($files = $request->file('galleryImages')) {
+                // Define upload path
+                $destinationPath = public_path('/files/'); // upload path
+                foreach($files as $img) {
+                    // Upload Orginal Image
+                    $profileImage =time().'_'.rand(1,9999999).'_'.$img->getClientOriginalName();
+                    $img->move($destinationPath, $profileImage);
+                    // Save In Database
+                    $imagemodel= new ProductGallery();
+                    $imagemodel->galleryImages= $profileImage;
+                    $imagemodel->product_id= $product->id;
+                    $imagemodel->user_id = $user_id;
+                    $imagemodel->company_id = $company_id;
+                    $imagemodel->save();
+                }
+            }
+
         }
         return redirect()->route('admin.products.index');
     }
@@ -119,16 +259,19 @@ class ProductRepository implements IProductRepositoryInterface
     public function show($id)
     {
         // TODO: Implement show() method.
-        $product = Product::find($id);
-        return view('admin.products.show',compact('product'));
+        abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $product = Product::with('product_classifications','product_galleries','sub_category')->find($id);
+        $categories = Category::where('isActive','1')->get();
+        return view('admin.products.show',compact('product','categories'));
     }
 
     public function edit($id)
     {
         // TODO: Implement edit() method.
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $product = Product::find($id);
-        return view('admin.products.edit',compact('product'));
+        $product = Product::with('product_classifications','product_galleries','sub_category')->find($id);
+        $categories = Category::where('isActive','1')->get();
+        return view('admin.products.edit',compact('product','categories'));
     }
 
     public function destroy_temp(Request $request, $id)

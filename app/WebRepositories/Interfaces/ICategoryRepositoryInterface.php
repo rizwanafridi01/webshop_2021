@@ -27,4 +27,6 @@ interface ICategoryRepositoryInterface
     public function restore($Id);
 
     public function trashed();
+
+    public function categoryDetails($id);
 }

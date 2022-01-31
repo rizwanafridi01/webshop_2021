@@ -13,7 +13,7 @@ interface IProductRepositoryInterface
 
     public function create();
 
-    public function store(ProductRequest $request);
+    public function store(Request $request);
 
     public function update(Request $request, $id);
 
