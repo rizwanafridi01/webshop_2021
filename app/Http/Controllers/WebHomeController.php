@@ -10,7 +10,7 @@ class WebHomeController extends Controller
 
     public function index()
     {
-        $products = Product::with('product_galleries','product_classifications','sub_category')->get();
+        $products = Product::with('product_galleries','product_classifications','sub_category')->where('isActive',1)->get();
         return view('web.home', compact('products'));
     }
 

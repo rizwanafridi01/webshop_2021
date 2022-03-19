@@ -84,8 +84,28 @@ class SubCategoryRepository implements ISubCategoryRepositoryInterface
         // TODO: Implement store() method.
         $user_id = session('user_id');
         $company_id = session('company_id');
+        if ($request->hasFile('thumbnail')) {
+
+            $thumbnail = $request->file('thumbnail');
+            $fileName = time() . '_' . rand(1, 999) . '_' . $thumbnail->getClientOriginalName();
+            // File extension
+            $extension = $thumbnail->getClientOriginalExtension();
+            //file location
+            $location = 'files/cat';
+            // Upload file
+            $thumbnail->move($location, $fileName);
+            // File path
+            $filepath = url('files/cat/' . $fileName);
+        }
+        else{
+            $location = 'files/cat';
+            $fileName = "NO_IMAGE.png";
+        }
+
         $sub_category = [
-            'name' =>$request->name,
+            'name' => $request->name,
+            'slug' => $request->name,
+            'thumbnail' => $location.'/'.$fileName,
             'description' =>$request->description ?? "Null",
             'user_id' =>$user_id ?? 0,
             'category_id' => $request->category_id ?? 0,
@@ -107,8 +127,35 @@ class SubCategoryRepository implements ISubCategoryRepositoryInterface
             ]);
         }
         else{
+
+            if ($request->hasFile('thumbnail')) {
+
+                $thumbnail = $request->file('thumbnail');
+                $fileName = time() . '_' . rand(1, 999) . '_' . $thumbnail->getClientOriginalName();
+                // File extension
+                $extension = $thumbnail->getClientOriginalExtension();
+                //file location
+                $location = 'files/cat';
+                // Upload file
+                $thumbnail->move($location, $fileName);
+                // File path
+                $filepath = url('files/cat/' . $fileName);
+            }
+            else{
+                $fileName = $request->previousImage;
+                if ($fileName == null)
+                {
+                    $fileName = "files/cat/NO_IMAGE.png";
+                }
+                else
+                {
+                    $fileName = $request->previousImage;
+                }
+            }
+
             $sub_category->update([
                 'name' =>$request->name,
+                'thumbnail' => $fileName,
                 'description' =>$request->description,
                 'user_id' =>$user_id ?? 0,
             ]);

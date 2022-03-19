@@ -56,6 +56,14 @@
                                 <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                             </div>
 
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="file" name="thumbnail" id="thumbnail" cols="30" rows="5" class="form-control"  placeholder="Image">
+                                    <input type="hidden" name="previousImage" value="{{ old('thumbnail', $sub_category->thumbnail) }}">
+                                </div>
+                            </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <textarea name="description" id="description" cols="30" rows="5" class="form-control" style="width: 100%" placeholder="Note">{{ $sub_category->description }}</textarea>

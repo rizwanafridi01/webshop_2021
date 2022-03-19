@@ -58,6 +58,12 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <input type="file" name="thumbnail" id="thumbnail" cols="30" rows="5" class="form-control"  placeholder="Image">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <textarea name="description" id="description" cols="30" rows="5" class="form-control" style="width: 100%" placeholder="Note"></textarea>
                                 </div>
                             </div>

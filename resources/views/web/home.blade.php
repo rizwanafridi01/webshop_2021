@@ -94,12 +94,17 @@
     <div class="section-padding-1">
         <div class="container-fluid">
             <div class="row">
+                @if(!empty($products))
                 @foreach($products as $product)
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                         <div class="product-wrap mb-55">
                             <div class="product-img pro-theme-color-border product-border mb-25">
                                 <a href="#">
-                                    <img style="height: 400px" src="{{ asset('files/'.$product->thumbnail) }}" alt="">
+                                    @if (!empty($product->thumbnail))
+                                    <img style="height: 400px" src="{{ asset('files/'.$product->thumbnail) }}" alt="{{ $product->name }}">
+                                    @else
+                                        <img style="height: 400px" src="{{ asset('files/'.$product->thumbnail) }}" alt="$product->thumbnail">
+                                    @endif
                                 </a>
                                 <span class="badge-green badge-right-20 badge-top-20 badge-ptb-1">NEW</span>
                                 <div class="product-action product-action-position-1 pro-action-theme-color">
@@ -117,10 +122,13 @@
                                         &nbsp; &nbsp; &nbsp;<span class="old-price">AED {{ $product->amount }}</span>
                                     @endif
                                 </div>
+
+                                    <input type="text" id="product_id" class="product_id" name="product_id" value="{{ $product->id }}">
                             </div>
                         </div>
                     </div>
                 @endforeach
+                @endif
 
 
 
@@ -529,7 +537,7 @@
             <div class="modal-body">
                 <div class="row g-0">
                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="quickview-slider-active owl-carousel" id="product_galleries1">
+                        <div class="quickview-slider-active owl-carousel" id="product_galleries">
 {{--                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-1.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-1.jpg') }}" alt=""></a>--}}
 {{--                            <a class="img-popup" href="{{ asset('web_assets/images/product/quickview-2.jpg') }}"><img src="{{ asset('web_assets/images/product/quickview-elec-2.jpg') }}" alt=""></a>--}}
                         </div>
@@ -588,9 +596,9 @@
 <script>
     $(document).ready(function (){
         $('.product_info').click(function (){
-            var Id = 60;
+            var Id = $('#product_id').val();
             // Id = $(this).val();
-            alert(Id)
+            // alert(Id)
             if(Id>0){
                 $.ajax({
                     url: "{{ URL('productDetails') }}/" + Id,

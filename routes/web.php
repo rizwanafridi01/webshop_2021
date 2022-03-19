@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\HomeProductController;
+use App\Http\Controllers\WebProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 //////////// test roots//////////////////
@@ -22,7 +23,8 @@ Route::post('store-file', [ProductsController::class, 'store_file']);
 //Auth::routes();
 
 ////////Social Pages ///////////
-Route::get('/', 'WebHomeController@index')->name('web');
+Route::get('/', 'WebHomeController@index')->name('web.home');
+Route::get('/shop', [WebProductController::class, 'index'])->name('web.shop');
 Route::get('add-to-cart/{id}', [HomeProductController::class, 'addToCart'])->name('add.to.cart');
 route::get('productDetails/{id}','WebHomeController@productDetails');
 //////// end of social pages ////////
@@ -42,14 +44,14 @@ Auth::routes(['register' => false]);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group([
-    'prefix' => 'user',
-    'as' => 'user.',
-    'namespace' => 'User',
-    'middleware' => ['auth']
-], function () {
-    Route::get('/', 'HomeController@index')->name('home');
-});
+//Route::group([
+//    'prefix' => 'user',
+//    'as' => 'user.',
+//    'namespace' => 'User',
+//    'middleware' => ['auth']
+//], function () {
+//    Route::get('/', 'HomeController@index')->name('home');
+//});
 
 Route::group([
     'prefix' => 'admin',

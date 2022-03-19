@@ -16,7 +16,8 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('thumbnail')->nullable();
+            $table->string('thumbnail')->nullable()->default('NO_IMG.png');
+            $table->string('slug')->nullable();
             $table->decimal('discount',10,2)->default('0');
             $table->decimal('amount',10,2)->default('0');
             $table->decimal('currentAmount',10,2)->default('0');
@@ -25,11 +26,14 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('Product_percentage_id')->default(0);
             $table->unsignedBigInteger('user_id')->default(0);
             $table->unsignedBigInteger('company_id')->default(0);
+            $table->unsignedBigInteger('product_brand_id')->default(0);
             $table->timestamp('createdDate')->useCurrent();
             $table->text('excerpt')->nullable();
             $table->text('description')->nullable();
             $table->text('uses')->nullable();
             $table->text('shippingInstruction')->nullable();
+            $table->text('aboutBrand')->nullable();
+            $table->text('vendorInfo')->nullable();
             $table->boolean('isActive')->default(true);
             $table->softDeletes();
             $table->timestamps();

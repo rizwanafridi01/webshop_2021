@@ -41,9 +41,20 @@ class Category extends Model
         return $this->belongsTo('App\Models\Product','product_id','id');
     }
 
+
     public function sub_categories()
     {
         return $this->hasMany('App\Models\SubCategory');
+    }
+
+    public function sub_categories_odd()
+    {
+        return $this->hasMany('App\Models\SubCategory')->whereRaw('id % 2 != 0');
+    }
+
+    public function sub_categories_even()
+    {
+        return $this->hasMany('App\Models\SubCategory')->whereRaw('id % 2 = 0');
     }
 
 

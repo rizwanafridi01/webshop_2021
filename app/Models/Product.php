@@ -56,4 +56,23 @@ class Product extends Model
         {
             return $this->hasMany('App\Models\ProductClassification');
         }
+
+
+
+    public function setSlugAttribute($val)
+    {
+        $slug =trim(preg_replace("/[^\w\d]+/i", "-", $val),"-");
+        $count = Product::where('slug','like', "%{$slug}%")->count();
+        if($count > 0)
+            $slug = $slug."-".($count+1);
+
+        $this->attributes['slug'] = strtolower($slug);
+    }
+    public  function  getSlugAttribute($val){
+        if ($val == null){
+            return $this->id;
+        }
+        return $val;
+
+    }
 }

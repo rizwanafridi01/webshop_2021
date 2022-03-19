@@ -132,77 +132,55 @@
                 <div class="container">
                     <div class="row g-0 hb-negative-mrg">
                         <div class="col-lg-3">
+
+
                             <div class="category-menu-wrap bg-theme-color-yellow">
                                 <h3 class="showcat"><a href="#"><i class="lnr lnr-menu"></i> Categories</a></h3>
                                 <div class="category-menu hidecat">
                                     <nav>
                                         <ul>
-                                            <li class="cr-dropdown"><a href="#">Computer <span class="fa fa-angle-right"></span></a>
-                                                <div class="category-menu-dropdown ct-menu-res-height-1">
-                                                    <div class="single-category-menu ct-menu-mrg-bottom category-menu-border">
-                                                        <h4>Laptop Accessories</h4>
-                                                        <ul>
-                                                            <li><a href="#">Laptop Keyboard</a></li>
-                                                            <li><a href="#">Laptop Mouse</a></li>
-                                                            <li><a href="#">Bluetooth Speaker</a></li>
-                                                            <li><a href="#">LED Light</a></li>
-                                                        </ul>
+
+                                            @foreach($categories as $category)
+                                                <li class="cr-dropdown"><a href="#">{{ $category->name ?? '' }} <span class="fa fa-angle-right"></span></a>
+                                                    <div class="category-menu-dropdown ct-menu-res-height-1">
+
+                                                        @if(count($category->sub_categories_odd) == "0")
+                                                        @else
+                                                            @if(!empty($category->sub_categories_odd))
+                                                                <div class="single-category-menu ct-menu-mrg-bottom category-menu-border">
+                                                                    <h4>{{ $category->name ?? '' }}</h4>
+                                                                    <ul>
+                                                                        @foreach($category->sub_categories_odd as $sub_category_odd)
+                                                                            <li><a href="#">{{ $sub_category_odd->name }}</a></li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+
+
+                                                        @if(count($category->sub_categories_even) == "0")
+                                                        @else
+                                                                @if(!empty($category->sub_categories_even))
+                                                                <div class="single-category-menu ct-menu-mrg-bottom category-menu-border">
+                                                                    <h4>{{ $category->name ?? '' }}</h4>
+                                                                    <ul>
+                                                                        @foreach($category->sub_categories_even as $suc_category_even)
+                                                                            <li><a href="#">{{ $suc_category_even->name }}</a></li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                        @endif
+                                                        @endif
+
+                                                        <div class="single-category-menu">
+                                                            <a href="#"><img src="{{ asset('web_assets/images/banner/menu-banner.png') }}" alt=""></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="single-category-menu ct-menu-mrg-bottom ct-menu-mrg-left">
-                                                        <h4>Laptop Accessories</h4>
-                                                        <ul>
-                                                            <li><a href="#">Laptop Keyboard</a></li>
-                                                            <li><a href="#">Laptop Mouse</a></li>
-                                                            <li><a href="#">Bluetooth Speaker</a></li>
-                                                            <li><a href="#">LED Light</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="single-category-menu">
-                                                        <h4>Laptop Accessories</h4>
-                                                        <ul>
-                                                            <li><a href="#">Laptop Keyboard</a></li>
-                                                            <li><a href="#">Laptop Mouse</a></li>
-                                                            <li><a href="#">Bluetooth Speaker</a></li>
-                                                            <li><a href="#">LED Light</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="single-category-menu">
-                                                        <a href="#"><img src="{{ asset('web_assets/images/banner/menu-banner.png') }}" alt=""></a>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="cr-dropdown"><a href="#">Accessories <span class="fa fa-angle-right"></span></a>
-                                                <div class="category-menu-dropdown ct-menu-res-height-2">
-                                                    <div class="single-category-menu">
-                                                        <h4>Laptop Accessories</h4>
-                                                        <ul>
-                                                            <li><a href="#">Laptop Keyboard</a></li>
-                                                            <li><a href="#">Laptop Mouse</a></li>
-                                                            <li><a href="#">Bluetooth Speaker</a></li>
-                                                            <li><a href="#">LED Light</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="single-category-menu ct-menu-mrg-left">
-                                                        <h4>Laptop Accessories</h4>
-                                                        <ul>
-                                                            <li><a href="#">Laptop Keyboard</a></li>
-                                                            <li><a href="#">Laptop Mouse</a></li>
-                                                            <li><a href="#">Bluetooth Speaker</a></li>
-                                                            <li><a href="#">LED Light</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="cr-dropdown"><a href="#">Computer Kit</a></li>
-                                            <li class="cr-dropdown"><a href="#">Laptop</a></li>
-                                            <li class="cr-dropdown"><a href="#">Laptop Accessories </a></li>
-                                            <li class="cr-dropdown"><a href="#">Smartwatch</a></li>
-                                            <li class="cr-dropdown"><a href="#">Accessories</a></li>
+                                                </li>
+                                            @endforeach
+
                                             <li class="cr-dropdown"><a href="#">Cameras</a></li>
-                                            <li class="cr-dropdown"><a href="#">Mobile Phone</a></li>
-                                            <li class="cr-dropdown"><a href="#">Drone</a></li>
-                                            <li class="cr-dropdown"><a href="#">Drone Cameras</a></li>
-                                            <li class="cr-dropdown"><a href="#">Apple Products </a></li>
                                         </ul>
                                     </nav>
                                 </div>

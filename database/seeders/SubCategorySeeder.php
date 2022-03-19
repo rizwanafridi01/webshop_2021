@@ -18,6 +18,7 @@ class SubCategorySeeder extends Seeder
             [
                 'id' => '1',
                 'name' => 'Sub-Ct-1',
+                'thumbnail' => 'NO_IMAGE.png',
                 'category_id' => '1',
             ],
         ];

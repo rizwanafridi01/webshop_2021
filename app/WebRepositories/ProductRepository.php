@@ -26,11 +26,11 @@ class ProductRepository implements IProductRepositoryInterface
         {
             return datatables()->of(Product::latest()->get())
                 ->addColumn('show', function ($data) {
-                    $button ='<a href="'.route('admin.products.show', $data->id).'"  class="btn btn-outline-primary"><i style="font-size: 20px" class="bx bx-folder-plus me-0"></i></a>';
+                    $button ='<a href="'.route('admin.products.show', $data->slug).'"  class="btn btn-outline-primary"><i style="font-size: 20px" class="bx bx-folder-plus me-0"></i></a>';
                     return $button;
                 })
                 ->addColumn('edit', function ($data) {
-                    $button ='<a href="'.route('admin.products.edit', $data->id).'"  class="btn btn-outline-primary"><i style="font-size: 20px" class="bx bx-pen me-0"></i></a>';
+                    $button ='<a href="'.route('admin.products.edit', $data->slug).'"  class="btn btn-outline-primary"><i style="font-size: 20px" class="bx bx-pen me-0"></i></a>';
                     return $button;
                 })
                 ->addColumn('delete', function ($data) {
@@ -107,6 +107,7 @@ class ProductRepository implements IProductRepositoryInterface
 
             $product = new Product();
             $product->name = $request->name;
+            $product->slug = $request->name;
             $product->thumbnail = $fileName;
             $product->sub_category_id = $request->subCategory_id;
             $product->amount = $request->amount;
@@ -256,20 +257,20 @@ class ProductRepository implements IProductRepositoryInterface
         // TODO: Implement getById() method.
     }
 
-    public function show($id)
+    public function show($slug)
     {
         // TODO: Implement show() method.
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $product = Product::with('product_classifications','product_galleries','sub_category')->find($id);
+        $product = Product::with('product_classifications','product_galleries','sub_category')->where('slug',$slug)->firstOrFail();
         $categories = Category::where('isActive','1')->get();
         return view('admin.products.show',compact('product','categories'));
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
         // TODO: Implement edit() method.
         abort_if(Gate::denies('product_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $product = Product::with('product_classifications','product_galleries','sub_category')->find($id);
+        $product = Product::with('product_classifications','product_galleries','sub_category')->where('slug', $slug)->firstOrFail();
         $categories = Category::where('isActive','1')->get();
         return view('admin.products.edit',compact('product','categories'));
     }
